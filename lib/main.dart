@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todoapptask/features/home/presentation/views/home_view.dart';
-import 'package:todoapptask/models/todo_item_model.dart';
+import 'package:todoapptask/cubits/todo_item_cubit/todo_item_cubit.dart';
+import 'package:todoapptask/views/home/home_view.dart';
+import 'package:todoapptask/models/todo_item.dart';
 
 void main() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(
-    TodoItemModelAdapter(),
-  );
+  Hive.registerAdapter(TodoItemModelAdapter());
+  await Hive.openBox<TodoItemModel>('todoItems');
+  await Hive.openBox<TodoItemModel>('completedItems');
 
-  runApp(
-    const ToDoApp(),
-  );
+  runApp(const ToDoApp());
 }
 
 class ToDoApp extends StatelessWidget {
@@ -19,9 +19,12 @@ class ToDoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomeView(),
+    return BlocProvider(
+      create: (context) => TodoitemCubit(),
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: HomeView(),
+      ),
     );
   }
 }
