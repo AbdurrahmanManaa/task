@@ -68,10 +68,16 @@ class _EditItemViewBodyState extends State<EditItemViewBody> {
             text: 'Edit',
             onTap: () async {
               await BlocProvider.of<TodoitemCubit>(context).updateItem(
-                  widget.itemIndex,
-                  TodoItemModel(
-                      title: titleController.text,
-                      detail: detailController.text));
+                widget.itemIndex,
+                TodoItemModel(
+                  title: titleController.text.isEmpty
+                      ? widget.todoItemModel.title
+                      : titleController.text,
+                  detail: detailController.text.isEmpty
+                      ? widget.todoItemModel.detail
+                      : detailController.text,
+                ),
+              );
               Navigator.pop(context);
             },
           ),
