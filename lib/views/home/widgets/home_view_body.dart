@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:todoapptask/cubits/todo_item_cubit/todo_item_cubit.dart';
 import 'package:todoapptask/views/display_item/display_item_view.dart';
 import 'package:todoapptask/views/edit_item/edit_item_view.dart';
@@ -54,8 +55,22 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                         );
                       },
                       onDelete: () {
-                        BlocProvider.of<TodoitemCubit>(context)
-                            .deleteItem(index);
+                        PanaraConfirmDialog.show(
+                          context,
+                          title: 'Are you sure?',
+                          message: 'Do you really want to delete this item?',
+                          confirmButtonText: 'Delete',
+                          cancelButtonText: 'Cancel',
+                          onTapConfirm: () {
+                            BlocProvider.of<TodoitemCubit>(context)
+                                .deleteItem(index);
+                            Navigator.pop(context);
+                          },
+                          onTapCancel: () {
+                            Navigator.pop(context);
+                          },
+                          panaraDialogType: PanaraDialogType.warning,
+                        );
                       },
                       onComplete: () {
                         BlocProvider.of<TodoitemCubit>(context)
