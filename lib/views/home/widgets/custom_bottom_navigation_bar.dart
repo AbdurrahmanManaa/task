@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todoapptask/views/completed_item/completed_view.dart';
 import 'package:todoapptask/views/home/widgets/bottom_navigation_item.dart';
+import 'package:todoapptask/views/search_item/search_item_view.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({super.key});
@@ -31,6 +32,20 @@ class CustomBottomNavigationBar extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) {
                         return const CompletedView();
+                      },
+                    ),
+                  );
+                },
+              ),
+              BottomNavigationItem(
+                title: 'Search',
+                icon: 'assets/images/search.svg',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const SearchItemView();
                       },
                     ),
                   );
